@@ -1,0 +1,33 @@
+[loggers]
+keys=root, outputLogging
+
+[handlers]
+keys=customFileHandler, customPrintHandler
+
+[formatters]
+keys=customFormat
+
+[logger_root]
+level=WARNING
+handlers=customFileHandler
+
+[logger_outputLogging]
+level=INFO
+handlers=customFileHandler,customPrintHandler
+qualname=outputLogging
+propagate=0
+
+[handler_customFileHandler]
+class=handlers.TimedRotatingFileHandler
+level=INFO
+formatter=customFormat
+args=('./../../logs/app.log','D')
+
+[handler_customPrintHandler]
+class=StreamHandler
+level=INFO
+formatter=customFormat
+args=(sys.stderr,)
+
+[formatter_customFormat]
+format=%(asctime)s - %(filename)s  - %(funcName)s - %(lineno)d - %(levelname)s : %(message)s
